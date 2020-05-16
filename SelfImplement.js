@@ -71,20 +71,23 @@ window.addEventListener('load', function() {
               var table = document.createElement('table');
               var tableBody = document.createElement('tbody');
               table.setAttribute('class', 'table table-bordered');
+              table.style.border = "1px solid black";
 
               if(tblbtn){
                 tblbtn.addEventListener('click', function() {
                     
-                    
                     var row = document.createElement('tr');
-        
+                    row.style.border = "1px solid black";
+
                     for(var i = 0; i < number; i++){
                         var cell = document.createElement('td');
                         var cellNode = document.createTextNode(document.getElementById('textarea' + i).value);
                         cell.appendChild(cellNode);
                         row.appendChild(cell);
-                        cell.style.border = "1px solid black";
+                        cell.style.border = "0px solid black";
                         cell.style.color = "black";
+                        
+
 
                         if(document.getElementById('bold').checked) {
                             cell.style.fontWeight = "800";
@@ -93,9 +96,17 @@ window.addEventListener('load', function() {
                         }
 
                         if(document.getElementById('diffcolor').checked) {
-                            cell.style.backgroundColor = "rgb(153, 115, 0)";
+                            cell.style.backgroundColor = "rgb(92, 154, 255)";
+                            if(i%2){
+                                cell.style.backgroundColor = "rgba(92, 154, 255, 0.85)";
+                                cell.style.color = "rgba(0, 0, 0, 0.75)";
+                            }
                         } else {
-                            cell.style.backgroundColor = "rgb(71, 71, 107)";
+                            cell.style.backgroundColor = "rgb(209, 157, 252)";
+                            if(i%2){
+                                cell.style.backgroundColor = "rgba(209, 157, 252, 0.85)";
+                                cell.style.color = "rgba(0, 0, 0, 0.75)";
+                            }
                         }
                     }
                     tableBody.appendChild(row);
