@@ -7,7 +7,7 @@ window.addEventListener('load', function() {
 
     if(btn){
         btn.addEventListener('click', function() {
-            var number = window.prompt("Type a number lower than 7", "");
+            var number = window.prompt("Type a number lower than 7 ( Number of columns in your table )", "");
             var info;
             if (number == null || number == "" || isNaN(number) || number > 6) {
                 info = "You have cancelled the prompt, didn't enter a number or entered number was higher than 8";
@@ -27,6 +27,7 @@ window.addEventListener('load', function() {
                 }
                 var br = document.createElement('br');
                 var br2 = document.createElement('br');
+                var br3 = document.createElement('br');
                 var tblbtn = document.createElement('button');
                 var prbtn = document.createElement('button');
                 var chckbx = document.createElement('input');
@@ -58,12 +59,12 @@ window.addEventListener('load', function() {
                 prbtn.style.background = "rgb(90, 90, 90)";
                 prbtn.style.border = "1px solid black";
                 
-                content.appendChild(br2);
+                content.appendChild(br);
                 content.appendChild(chckbx);
                 content.appendChild(chckbxtxt);
                 content.appendChild(chckbx2);
                 content.appendChild(chckbxtxt2);
-                content.appendChild(br);
+                content.appendChild(br2);
                 content.appendChild(tblbtn);
                 content.appendChild(prbtn);
               }
@@ -73,21 +74,25 @@ window.addEventListener('load', function() {
               table.setAttribute('class', 'table table-bordered');
               table.style.border = "1px solid black";
 
+              var cl = 0;
+
               if(tblbtn){
                 tblbtn.addEventListener('click', function() {
-                    
+                    cl = cl + 1;
+
                     var row = document.createElement('tr');
                     row.style.border = "1px solid black";
-
+                    row.setAttribute('id', 'tablerow' + cl);
+                    var delbtn = document.createElement('button');
+                    
                     for(var i = 0; i < number; i++){
                         var cell = document.createElement('td');
                         var cellNode = document.createTextNode(document.getElementById('textarea' + i).value);
                         cell.appendChild(cellNode);
                         row.appendChild(cell);
+                        row.appendChild(delbtn);
                         cell.style.border = "0px solid black";
                         cell.style.color = "black";
-                        
-
 
                         if(document.getElementById('bold').checked) {
                             cell.style.fontWeight = "800";
@@ -109,6 +114,10 @@ window.addEventListener('load', function() {
                             }
                         }
                     }
+
+                    delbtn.innerHTML = "X";
+                    delbtn.style.height = "50px";
+                    delbtn.style.width = "100%";
                     tableBody.appendChild(row);
                     table.appendChild(tableBody);
                     tblplace.appendChild(table);
@@ -116,26 +125,24 @@ window.addEventListener('load', function() {
                         document.getElementById('textarea' + j).value = "";
                     }
 
+                    if(delbtn){
+                        var el = document.getElementById('tablerow' + cl);
+                        delbtn.addEventListener('click', function() {
+                            el.remove();
+                        })
+                    }
+
                     
                 })
 
                 if(prbtn) {
                     prbtn.addEventListener('click', function () {
-                        var mywindow = window.open('', 'PRINT', 'height=400,width=600');
-            
-                        mywindow.document.write('<html><head>');
-                        mywindow.document.write('</head><body >');
-                        mywindow.document.write('<h1>' + document.title  + '</h1>');
-                        mywindow.document.write(document.getElementById('tableplace').innerHTML);
-                        mywindow.document.write('</body></html>');
-            
-                        mywindow.document.close(); // necessary for IE >= 10
-                        mywindow.focus(); // necessary for IE >= 10*/
-            
-                        mywindow.print();
-                        mywindow.close();
-            
-                        return true;
+
+                        document.getElementById('content').style.visibility = "hidden";
+
+                        window.print();
+
+                        document.getElementById('content').style.visibility = "visible";
                     })
                 }
             }
